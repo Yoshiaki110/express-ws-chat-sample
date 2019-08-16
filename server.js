@@ -22,17 +22,25 @@ app.use(compression());
 app.use(serveStatic(`${__dirname}/public`));
 
 app.ws('/', (ws, req) => {
+  console.log('connect', ws.upgradeReq.socket._peername);
+//  console.log('***connect', ws);
+//  console.log('***connect', ws.upgradeReq.ReadableState);
+//  console.log('*****connect', ws.upgradeReq.IncomingMessage);
+//  console.log('connect', ws.upgradeReq.IncomingMessage.headers.origin);
   connects.push(ws);
 
   ws.on('message', message => {
-    console.log('Received -', message);
+    console.log('reseceive', message, ws.upgradeReq.socket._peername);
     
     connects.forEach(socket => {
+      console.log('send', socket.upgradeReq.socket._peername);
       socket.send(message);
     });
   });
   
   ws.on('close', () => {
+    console.log('connection close', ws.upgradeReq.socket._peername);
+//    console.log('connection close', ws);
     connects = connects.filter(conn => {
       return (conn === ws) ? false : true;
     });

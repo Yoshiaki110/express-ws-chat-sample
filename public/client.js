@@ -1,5 +1,6 @@
 (function() {
   var HOST = location.origin.replace(/^http/, 'ws');
+//  var HOST = 'ws://express-ws-chat-sample-110.herokuapp.com';
   var ws = new WebSocket(HOST);
   
   var form = document.querySelector('.form');
